@@ -25,6 +25,8 @@ source-repository head
 
 library
   exposed-modules:
+      Bird
+      GameState
       Pillar
       UI
   other-modules:

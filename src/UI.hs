@@ -17,7 +17,7 @@ drawGround = translate 0 (-500) (rectangleSolid 1800 10)
 
 -- function to draw a pillar
 drawPillar :: Pillar -> Picture
-drawPillar (Pillar pillarColor height width gap gapPosition) = color pillarColor (Pictures [top, bottom])
+drawPillar (Pillar pillarColor xAxisPosition height width gap gapPosition) = color pillarColor (Pictures [top, bottom])
   where
     gapHalf = gap / 2
     gapTop = gapPosition + gapHalf
@@ -25,8 +25,8 @@ drawPillar (Pillar pillarColor height width gap gapPosition) = color pillarColor
 
     -- top pillar
     topHeight = height / 2 - gapTop
-    top = translate 0 (gapTop + topHeight / 2) (rectangleSolid width topHeight)
+    top = translate xAxisPosition (gapTop + topHeight / 2) (rectangleSolid width topHeight)
 
     -- bottom pillar
     bottomHeight = gapBottom + height / 2
-    bottom = translate 0 (-height / 2 + bottomHeight / 2) (rectangleSolid width bottomHeight)
+    bottom = translate xAxisPosition (-height / 2 + bottomHeight / 2) (rectangleSolid width bottomHeight)

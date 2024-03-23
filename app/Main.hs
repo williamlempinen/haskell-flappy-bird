@@ -10,7 +10,7 @@ overFlowDefaultColor = white
 main :: IO ()
 main = do
     bg <- loadBgImage
-    pillar <- generatePillar
+    pillar <- generatePillar 900
 
     let scene = Pictures [bg, drawGround, drawPillar pillar]
     
