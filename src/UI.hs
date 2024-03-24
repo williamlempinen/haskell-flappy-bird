@@ -3,6 +3,7 @@ module UI where
 import Graphics.Gloss
 import Graphics.Gloss.Data.Bitmap (loadBMP)
 import Pillar (Pillar(..), generatePillar)
+import Bird (Bird(..))
 
 --init window
 window :: Display
@@ -12,6 +13,7 @@ window = InWindow "Flappy Bird" (1800, 1000) (500, 500)
 loadBgImage :: IO Picture
 loadBgImage = fmap (scale 2 2) (loadBMP "src/assets/flappy_bird_bg.bmp")
 
+--draw static elements
 drawGround :: Picture
 drawGround = translate 0 (-500) (rectangleSolid 1800 10)
 
@@ -23,6 +25,9 @@ drawRightWall = rotate 90 (translate 0 900 (rectangleSolid 1000 10))
 
 drawLeftWall :: Picture
 drawLeftWall = rotate 90 (translate 0 (-900) (rectangleSolid 1000 10))
+
+drawBird :: Bird -> Picture
+drawBird (Bird (xPos, yPos) (xVel, yVel)) = translate xPos yPos (circleSolid 30)
 
 -- function to draw a pillar
 drawPillar :: Pillar -> Picture
