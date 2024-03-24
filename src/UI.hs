@@ -15,6 +15,15 @@ loadBgImage = fmap (scale 2 2) (loadBMP "src/assets/flappy_bird_bg.bmp")
 drawGround :: Picture
 drawGround = translate 0 (-500) (rectangleSolid 1800 10)
 
+drawCeiling :: Picture
+drawCeiling = translate 0 500 (rectangleSolid 1800 10)
+
+drawRightWall :: Picture
+drawRightWall = rotate 90 (translate 0 900 (rectangleSolid 1000 10))
+
+drawLeftWall :: Picture
+drawLeftWall = rotate 90 (translate 0 (-900) (rectangleSolid 1000 10))
+
 -- function to draw a pillar
 drawPillar :: Pillar -> Picture
 drawPillar (Pillar pillarColor xAxisPosition height width gap gapPosition) = color pillarColor (Pictures [top, bottom])
@@ -29,4 +38,6 @@ drawPillar (Pillar pillarColor xAxisPosition height width gap gapPosition) = col
 
     -- bottom pillar
     bottomHeight = gapBottom + height / 2
-    bottom = translate xAxisPosition (-height / 2 + bottomHeight / 2) (rectangleSolid width bottomHeight)
+    bottom = translate xAxisPosition (-(height / 2) + bottomHeight / 2) (rectangleSolid width bottomHeight)
+
+

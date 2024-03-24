@@ -2,10 +2,11 @@ module Pillar
     ( Pillar(..)
     , generatePillar
     , generateInitialPillars
+    , movePillars
     ) where
 
 import System.Random (randomRIO)
-import Graphics.Gloss
+import Graphics.Gloss (Color, dark, green)
 
 data Pillar = Pillar { 
     pillarColor   :: Color,
@@ -19,7 +20,8 @@ data Pillar = Pillar {
 -- generate Pillar with a random gap position
 generatePillar :: Float -> IO Pillar
 generatePillar xAxisPos = do
-    randomGapPosition <- randomRIO (-300, 300)
+    -- random position for the gap's center point
+    randomGapPosition <- randomRIO (-250, 250)
     return Pillar { pillarColor = dark green,
                     xAxisPosition = xAxisPos,
                     height = 1000,
@@ -27,13 +29,23 @@ generatePillar xAxisPos = do
                     gap = 300,
                     gapPosition = randomGapPosition }
 
-
+-- move every pillar
 movePillars :: Float -> [Pillar] -> [Pillar]
-movePillars move = map movePillarsHelper
+movePillars move = map movePillar
     where 
-        movePillarsHelper :: Pillar -> Pillar
-        movePillarsHelper pillar = pillar { xAxisPosition = xAxisPosition pillar - move }
+        movePillar :: Pillar -> Pillar
+        movePillar pillar = pillar { xAxisPosition = xAxisPosition pillar - move }
 
 
+-- generate 1000 pillars
 generateInitialPillars :: IO [Pillar]
-generateInitialPillars = sequence [generatePillar (800 + fromIntegral i * 400) | i <- [0..4]]
+generateInitialPillars = generateNewPillars 0 1000
+
+generateNewPillars :: Int -> Int -> IO [Pillar]
+generateNewPillars count maxPillars
+    | count >= maxPillars = return []
+    | otherwise           = do
+        let xAxisPos = 800 + fromIntegral count * 700
+        newPillar <- generatePillar xAxisPos
+        restPillars <- generateNewPillars (count + 1) maxPillars
+        return (newPillar : restPillars)
