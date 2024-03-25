@@ -1,6 +1,6 @@
 module GameState (GameState(..), initialState, renderGame, handleInput, updateGameState) where
 
-import Pillar (Pillar(..), generateInitialPillars, generatePillar, movePillars)
+import Pillar (Pillar(..), generatePillars, generatePillar, movePillars)
 import Graphics.Gloss (Picture(Pictures))
 import Graphics.Gloss.Interface.Pure.Game (Event(..), Key(..), SpecialKey(..), KeyState(..))
 import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird)
@@ -43,8 +43,8 @@ updateGameState _ (GameOver score) = GameOver score
 handleInput :: Event -> GameState -> GameState
 handleInput (EventKey (SpecialKey KeySpace) Down _ _) (Playing pillars score bird) = 
     let (xPrev, yPrev) = location bird
-        jump = 150
-        updatedBird = bird { location = (xPrev, yPrev + jump), velocity = (0, 0) } 
+        jump = 300
+        updatedBird = bird { velocity = (fst (velocity bird), jump) }
     in Playing pillars score updatedBird
 handleInput _ gameState = gameState
 

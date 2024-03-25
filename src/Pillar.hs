@@ -1,7 +1,7 @@
 module Pillar 
     ( Pillar(..)
     , generatePillar
-    , generateInitialPillars
+    , generatePillars
     , movePillars
     ) where
 
@@ -38,14 +38,14 @@ movePillars move = map movePillar
 
 
 -- generate 1000 pillars
-generateInitialPillars :: IO [Pillar]
-generateInitialPillars = generateNewPillars 0 1000
-
-generateNewPillars :: Int -> Int -> IO [Pillar]
-generateNewPillars count maxPillars
-    | count >= maxPillars = return []
-    | otherwise           = do
-        let xAxisPos = 800 + fromIntegral count * 700
+generatePillars :: Int -> Int -> IO [Pillar]
+generatePillars min max
+    | min >= max = return []
+    | otherwise  = do
+        let xAxisPos = 800 + fromIntegral min * 700
         newPillar <- generatePillar xAxisPos
-        restPillars <- generateNewPillars (count + 1) maxPillars
+        restPillars <- generatePillars (min + 1) max
         return (newPillar : restPillars)
+
+
+
