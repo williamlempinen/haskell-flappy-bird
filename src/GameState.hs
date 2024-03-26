@@ -3,7 +3,7 @@ module GameState (GameState(..), initialState, renderGame, handleInput, updateGa
 import Pillar (Pillar(..), generatePillars, generatePillar, movePillars)
 import Graphics.Gloss (Picture(Pictures))
 import Graphics.Gloss.Interface.Pure.Game (Event(..), Key(..), SpecialKey(..), KeyState(..))
-import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird, drawGameOver)
+import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird, drawGameOver, drawScore)
 import Bird (Bird(..), gravityOnBird, birdCollision)
 
 data GameState = Menu
@@ -15,27 +15,36 @@ data GameState = Menu
 initialState :: [Pillar] -> Bird -> GameState
 initialState gamePillars bird = Playing { pillars = gamePillars, score = 0, bird = bird }
 
+--resetGame :: Float -> GameState
+--resetGame seconds = Playing (updatePillars seconds pillars) score (gravityOnBird seconds bird)
+
 -- draw static elements 
 renderGame :: Picture -> GameState -> Picture
-renderGame bg (Playing pillars _ bird ) = Pictures (bg 
-                                                   : drawGround
-                                                   : drawCeiling
-                                                   : drawLeftWall
-                                                   : drawRightWall 
-                                                   : drawBird bird
-                                                   : map drawPillar pillars)
-renderGame bg (GameOver score) = Pictures (bg : drawGameOver : [])
+renderGame bg (Playing pillars score bird ) = Pictures (bg 
+                                                       : drawGround
+                                                       : drawCeiling
+                                                       : drawLeftWall
+                                                       : drawRightWall 
+                                                       : drawBird bird
+                                                       : drawScore score
+                                                       : map drawPillar pillars)
+renderGame bg (GameOver score) = Pictures (bg : drawGameOver : drawScore score : [])
 renderGame bg Menu = Pictures (bg : drawCeiling : [])
 
 
 updateGameState :: Float -> GameState -> GameState
-updateGameState seconds (Playing pillars score bird) = if birdCollision bird pillars then GameOver score else Playing (updatePillars seconds pillars) score (gravityOnBird seconds bird)
+updateGameState seconds (Playing pillars score bird) = if birdCollision bird pillars then GameOver score 
+    else Playing (updatePillars seconds pillars) (updateScore score) (gravityOnBird seconds bird)
     where
         updatePillars :: Float -> [Pillar] -> [Pillar]
         updatePillars seconds pillars = filter (not . isPillarOutOfScreen) (movePillars (seconds * 150) pillars)
 
         isPillarOutOfScreen :: Pillar -> Bool
         isPillarOutOfScreen pillar = xAxisPosition pillar <= -900
+
+        updateScore :: Int -> Int
+        updateScore prev = prev + 1
+
 -- placeholder
 updateGameState _ Menu = Menu
 updateGameState _ (GameOver score) = GameOver score

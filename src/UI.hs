@@ -29,6 +29,9 @@ drawLeftWall = rotate 90 (translate 0 (-900) (rectangleSolid 1000 10))
 drawBird :: Bird -> Picture
 drawBird (Bird (xPos, yPos) _) = translate xPos yPos (circleSolid 40)
 
+drawScore :: Int -> Picture
+drawScore score = Text ("Score: " ++ show score)
+
 drawGameOver :: Picture
 drawGameOver = translate 0 0 (circleSolid 60)
 
