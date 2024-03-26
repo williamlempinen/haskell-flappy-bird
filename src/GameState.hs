@@ -3,8 +3,8 @@ module GameState (GameState(..), initialState, renderGame, handleInput, updateGa
 import Pillar (Pillar(..), generatePillars, generatePillar, movePillars)
 import Graphics.Gloss (Picture(Pictures))
 import Graphics.Gloss.Interface.Pure.Game (Event(..), Key(..), SpecialKey(..), KeyState(..))
-import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird)
-import Bird (Bird(..), gravityOnBird)
+import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird, drawGameOver)
+import Bird (Bird(..), gravityOnBird, birdCollision)
 
 data GameState = Menu
                | Playing  { pillars :: [Pillar], score :: Int, bird :: Bird }
@@ -24,16 +24,18 @@ renderGame bg (Playing pillars _ bird ) = Pictures (bg
                                                    : drawRightWall 
                                                    : drawBird bird
                                                    : map drawPillar pillars)
+renderGame bg (GameOver score) = Pictures (bg : drawGameOver : [])
+renderGame bg Menu = Pictures (bg : drawCeiling : [])
 
 
 updateGameState :: Float -> GameState -> GameState
-updateGameState seconds (Playing pillars score bird) = Playing (updatePillars seconds pillars) score (gravityOnBird seconds bird)
+updateGameState seconds (Playing pillars score bird) = if birdCollision bird pillars then GameOver score else Playing (updatePillars seconds pillars) score (gravityOnBird seconds bird)
     where
         updatePillars :: Float -> [Pillar] -> [Pillar]
         updatePillars seconds pillars = filter (not . isPillarOutOfScreen) (movePillars (seconds * 150) pillars)
 
         isPillarOutOfScreen :: Pillar -> Bool
-        isPillarOutOfScreen pillar = xAxisPosition pillar < -900
+        isPillarOutOfScreen pillar = xAxisPosition pillar <= -900
 -- placeholder
 updateGameState _ Menu = Menu
 updateGameState _ (GameOver score) = GameOver score
@@ -42,9 +44,10 @@ updateGameState _ (GameOver score) = GameOver score
 -- user input handler, space equals jump
 handleInput :: Event -> GameState -> GameState
 handleInput (EventKey (SpecialKey KeySpace) Down _ _) (Playing pillars score bird) = 
-    let (xPrev, yPrev) = location bird
-        jump = 300
+    let jump = 500
         updatedBird = bird { velocity = (fst (velocity bird), jump) }
     in Playing pillars score updatedBird
+--handleInput (EventKey (SpecialKey KeyEnter) Down _ _) (GameOver score) = initialState gamePillars bird
+-- placeholder
 handleInput _ gameState = gameState
 

@@ -27,7 +27,11 @@ drawLeftWall :: Picture
 drawLeftWall = rotate 90 (translate 0 (-900) (rectangleSolid 1000 10))
 
 drawBird :: Bird -> Picture
-drawBird (Bird (xPos, yPos) (xVel, yVel)) = translate xPos yPos (circleSolid 40)
+drawBird (Bird (xPos, yPos) _) = translate xPos yPos (circleSolid 40)
+
+drawGameOver :: Picture
+drawGameOver = translate 0 0 (circleSolid 60)
+
 
 -- function to draw a pillar
 drawPillar :: Pillar -> Picture
