@@ -22,12 +22,12 @@ generatePillar :: Float -> IO Pillar
 generatePillar xAxisPos = do
     -- random position for the gap's center point
     randomGapPosition <- randomRIO (-250, 250)
-    return Pillar { pillarColor = dark green,
+    return Pillar { pillarColor   = dark green,
                     xAxisPosition = xAxisPos,
-                    height = 1000,
-                    width = 80,
-                    gap = 300,
-                    gapPosition = randomGapPosition }
+                    height        = 1000,
+                    width         = 80,
+                    gap           = 300,
+                    gapPosition   = randomGapPosition }
 
 -- move every pillar
 movePillars :: Float -> [Pillar] -> [Pillar]

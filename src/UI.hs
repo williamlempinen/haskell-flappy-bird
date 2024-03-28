@@ -30,7 +30,7 @@ drawBird :: Bird -> Picture
 drawBird (Bird (xPos, yPos) _) = translate xPos yPos (circleSolid 40)
 
 drawScore :: Int -> Picture
-drawScore score = Text ("Score: " ++ show score)
+drawScore score = translate (-150) (-400) (scale 0.5 0.5 (color black (Text ("Score: " ++ show score))))
 
 drawGameOver :: Picture
 drawGameOver = translate 0 0 (circleSolid 60)
