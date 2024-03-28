@@ -1,10 +1,11 @@
 module GameState (GameState(..), initialState, renderGame, handleInput, updateGameState) where
 
-import Pillar (Pillar(..), movePillars)
+import Pillar (Pillar(..), movePillars, generatePillars)
 import Graphics.Gloss (Picture(Pictures))
 import Graphics.Gloss.Interface.Pure.Game (Event(..), Key(..), SpecialKey(..), KeyState(..))
 import UI (drawGround, drawPillar, drawCeiling, drawLeftWall, drawRightWall, drawBird, drawGameOver, drawScore)
 import Bird (Bird(..), gravityOnBird, birdCollision, generateBird)
+import System.Random (mkStdGen)
 
 data GameState = Menu
                | Playing  { pillars :: [Pillar], score :: Int, bird :: Bird }
@@ -13,8 +14,8 @@ data GameState = Menu
                deriving Show
 
 -- initial state when app is launched
-initialState :: [Pillar] -> Bird -> GameState
-initialState gamePillars bird = Playing { pillars = gamePillars, score = 0, bird = bird }
+initialState :: GameState
+initialState = Playing { pillars = fst (generatePillars 0 1000 (mkStdGen 42)), score = 0, bird = generateBird }
 
 -- draw static elements 
 renderGame :: Picture -> GameState -> Picture
