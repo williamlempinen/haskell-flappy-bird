@@ -5,6 +5,7 @@ import Pillar (generatePillars)
 import Graphics.Gloss (Color, white, play)
 import GameState (initialState, renderGame, handleInput, updateGameState, GameState (Playing, pillars))
 import Bird (generateBird)
+import System.Random (mkStdGen)
 
 
 overFlowDefaultColor :: Color
@@ -17,8 +18,9 @@ main :: IO ()
 main = do
     -- use function to load the background image
     bg          <- loadBgImage
-    -- use function to generate the pillars for the game
-    gamePillars <- generatePillars 0 1000
+    -- generator, generate pillars 
+    let generator = mkStdGen 42
+    let (gamePillars, _) = generatePillars 0 1000 generator
     -- initialize game
     play window overFlowDefaultColor fps (initialState gamePillars generateBird) (renderGame bg) handleInput updateGameState
 

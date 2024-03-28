@@ -5,7 +5,7 @@ module Pillar
     , movePillars
     ) where
 
-import System.Random (randomRIO)
+import System.Random (StdGen, randomR)
 import Graphics.Gloss (Color, dark, green)
 
 data Pillar = Pillar { 
@@ -18,16 +18,15 @@ data Pillar = Pillar {
 } deriving (Eq, Show)
 
 -- generate Pillar with a random gap position
-generatePillar :: Float -> IO Pillar
-generatePillar xAxisPos = do
-    -- random position for the gap's center point
-    randomGapPosition <- randomRIO (-250, 250)
-    return Pillar { pillarColor   = dark green,
-                    xAxisPosition = xAxisPos,
-                    height        = 1000,
-                    width         = 80,
-                    gap           = 300,
-                    gapPosition   = randomGapPosition }
+generatePillar :: Float -> StdGen -> (Pillar, StdGen)
+generatePillar xAxisPos gen = 
+    let (randomGapPosition, newGen) = randomR (-250, 250) gen
+    in (Pillar { pillarColor = dark green,
+                 xAxisPosition = xAxisPos,
+                 height = 1000,
+                 width = 80,
+                 gap = 300,
+                 gapPosition = randomGapPosition }, newGen)
 
 -- move every pillar
 movePillars :: Float -> [Pillar] -> [Pillar]
@@ -38,14 +37,13 @@ movePillars move = map movePillar
 
 
 -- generate 1000 pillars
-generatePillars :: Int -> Int -> IO [Pillar]
-generatePillars min max
-    | min >= max = return []
-    | otherwise  = do
-        let xAxisPos = 800 + fromIntegral min * 700
-        newPillar <- generatePillar xAxisPos
-        restPillars <- generatePillars (min + 1) max
-        return (newPillar : restPillars)
-
+generatePillars :: Int -> Int -> StdGen -> ([Pillar], StdGen)
+generatePillars minPillars maxPillars gen
+    | minPillars >= maxPillars = ([], gen)
+    | otherwise =
+        let xAxisPos = 800 + fromIntegral minPillars * 700
+            (newPillar, newGen) = generatePillar xAxisPos gen
+            (restPillars, finalGen) = generatePillars (minPillars + 1) maxPillars newGen
+        in (newPillar : restPillars, finalGen)
 
 
