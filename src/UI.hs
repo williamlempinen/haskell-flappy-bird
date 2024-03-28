@@ -20,12 +20,6 @@ drawGround = translate 0 (-500) (rectangleSolid 1800 10)
 drawCeiling :: Picture
 drawCeiling = translate 0 500 (rectangleSolid 1800 10)
 
-drawRightWall :: Picture
-drawRightWall = rotate 90 (translate 0 900 (rectangleSolid 1000 10))
-
-drawLeftWall :: Picture
-drawLeftWall = rotate 90 (translate 0 (-900) (rectangleSolid 1000 10))
-
 drawBird :: Bird -> Picture
 drawBird (Bird (xPos, yPos) _) = translate xPos yPos (circleSolid 40)
 
@@ -34,6 +28,14 @@ drawScore score = translate (-150) (-400) (scale 0.5 0.5 (color black (Text ("Sc
 
 drawGameOver :: Picture
 drawGameOver = translate 0 0 (circleSolid 60)
+
+drawMenu :: Picture
+drawMenu = Pictures [translate (-400) 100 (color (dark black) (Text "FLAPPY BIRD")), 
+                     translate (-401) 101 (color (dark black) (Text "FLAPPY BIRD")),
+                     translate (-399) 99 (color (dark black) (Text "FLAPPY BIRD")),
+                     translate (-400) 101 (color (dark black) (Text "FLAPPY BIRD")),
+                     translate (-400) 99 (color (dark black) (Text "FLAPPY BIRD")),
+                     translate (-370) (-180) (scale 0.5 0.5(color (dark black) (Text "PRESS ENTER TO PLAY")))]
 
 
 -- function to draw a pillar
