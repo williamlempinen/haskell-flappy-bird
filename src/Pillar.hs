@@ -1,9 +1,8 @@
-module Pillar 
-    ( Pillar(..)
-    , generatePillar
-    , generatePillars
-    , movePillars
-    ) where
+module Pillar ( Pillar(..)
+              , generatePillar
+              , generatePillars
+              , movePillars
+              ) where
 
 import System.Random (StdGen, randomR)
 import Graphics.Gloss (Color, dark, green)
@@ -44,6 +43,6 @@ generatePillars minPillars maxPillars gen
         let xAxisPos                = 800 + fromIntegral minPillars * 700
             (newPillar, newGen)     = generatePillar xAxisPos gen
             (restPillars, finalGen) = generatePillars (minPillars + 1) maxPillars newGen
-        in (newPillar : restPillars, finalGen)
+        in  (newPillar : restPillars, finalGen)
 
 

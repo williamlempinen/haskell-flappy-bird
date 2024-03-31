@@ -1,7 +1,6 @@
 module Bird (Bird(..), generateBird, gravityOnBird, birdCollision) where
-import Graphics.Gloss (Picture)
-import Pillar (Pillar(..))
 
+import Pillar (Pillar(..))
 
 data Bird = Bird { location :: (Float, Float), velocity :: (Float, Float) } deriving Show
 
