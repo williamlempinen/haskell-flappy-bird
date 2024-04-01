@@ -1,10 +1,10 @@
 name:                haskell-flappy-bird
 version:             0.1.0.0
-github:              "githubuser/haskell-flappy-bird"
+github:              "williamlempinen/haskell-flappy-bird"
 license:             BSD-3-Clause
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2024 Author name here"
+author:              "William Lempinen"
+maintainer:          "wlempin@gmail.com"
+copyright:           "2024 William Lempinen"
 
 extra-source-files:
 - README.md

@@ -7,11 +7,11 @@ cabal-version: 2.2
 name:           haskell-flappy-bird
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/haskell-flappy-bird#readme>
-homepage:       https://github.com/githubuser/haskell-flappy-bird#readme
-bug-reports:    https://github.com/githubuser/haskell-flappy-bird/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2024 Author name here
+homepage:       https://github.com/williamlempinen/haskell-flappy-bird#readme
+bug-reports:    https://github.com/williamlempinen/haskell-flappy-bird/issues
+author:         William Lempinen
+maintainer:     wlempin@gmail.com
+copyright:      2024 William Lempinen
 license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
@@ -21,7 +21,7 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/haskell-flappy-bird
+  location: https://github.com/williamlempinen/haskell-flappy-bird
 
 library
   exposed-modules:

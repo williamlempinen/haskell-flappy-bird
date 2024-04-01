@@ -27,14 +27,6 @@ generatePillar xAxisPos gen =
                  gap                = 300,
                  gapPosition        = randomGapPosition }, newGen)
 
--- move every pillar
-movePillars :: Float -> [Pillar] -> [Pillar]
-movePillars move = map movePillar
-    where 
-        movePillar :: Pillar -> Pillar
-        movePillar pillar = pillar { xAxisPosition = xAxisPosition pillar - move }
-
-
 -- generate 1000 pillars
 generatePillars :: Int -> Int -> StdGen -> ([Pillar], StdGen)
 generatePillars minPillars maxPillars gen
@@ -44,5 +36,14 @@ generatePillars minPillars maxPillars gen
             (newPillar, newGen)     = generatePillar xAxisPos gen
             (restPillars, finalGen) = generatePillars (minPillars + 1) maxPillars newGen
         in  (newPillar : restPillars, finalGen)
+
+-- move every pillar
+movePillars :: Float -> [Pillar] -> [Pillar]
+movePillars move = map movePillar
+    where 
+        movePillar :: Pillar -> Pillar
+        movePillar pillar = pillar { xAxisPosition = xAxisPosition pillar - move }
+
+
 
 
