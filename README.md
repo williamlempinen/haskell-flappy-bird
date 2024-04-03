@@ -42,5 +42,5 @@ From the initial menu window you have to press Enter to switch to the playing st
 
 After losing you have to press Enter once to enter the menu stage, and twice to play again.
 
-Try to beat me record, which is 16. 
+Try to beat my record, which is 16. 
 Good luck!!
