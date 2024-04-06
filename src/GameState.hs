@@ -58,9 +58,9 @@ handleInput (EventKey (SpecialKey KeySpace) Down _ _) (Playing p s b) =
         updatedBird = b { velocity = jump }
     in Playing p s updatedBird
 handleInput (EventKey (SpecialKey KeyEnter) Down _ _) (GameOver _) = Menu
-handleInput (EventKey (SpecialKey KeyEnter) Down _ _) Menu = Playing { pillars = fst (generatePillars 0 1000 (mkStdGen 42)), 
-                                                                       score   = 0, 
-                                                                       bird    = generateBird }
-handleInput _ gameState = gameState
+handleInput (EventKey (SpecialKey KeyEnter) Down _ _) Menu         = Playing { pillars = fst (generatePillars 0 1000 (mkStdGen 42)), 
+                                                                               score   = 0, 
+                                                                               bird    = generateBird }
+handleInput _ gameState                                            = gameState
 
 

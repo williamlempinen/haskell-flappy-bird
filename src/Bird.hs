@@ -1,4 +1,8 @@
-module Bird (Bird(..), generateBird, gravityOnBird, birdCollision) where
+module Bird (Bird(..)
+            , generateBird
+            , gravityOnBird
+            , birdCollision
+            ) where
 
 import Pillar (Pillar(..))
 
