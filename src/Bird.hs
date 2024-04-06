@@ -2,16 +2,16 @@ module Bird (Bird(..), generateBird, gravityOnBird, birdCollision) where
 
 import Pillar (Pillar(..))
 
-data Bird = Bird { location :: (Float, Float), velocity :: (Float, Float) } deriving Show
+data Bird = Bird { location :: (Float, Float), velocity :: Float } deriving Show
 
 generateBird :: Bird
-generateBird = Bird (0, 0) (0, 0) 
+generateBird = Bird (0, 0) 0 
 
 gravityOnBird :: Float -> Bird -> Bird
-gravityOnBird seconds bird = bird { location = (xPos, yPos + moveY), velocity = (xVel, yVel + gravity * seconds) }
+gravityOnBird seconds bird = bird { location = (xPos, yPos + moveY), velocity = yVel + gravity * seconds }
     where
         (xPos, yPos) = location bird
-        (xVel, yVel) = velocity bird
+        yVel         = velocity bird
         gravity      = -600
         moveY        = yVel * seconds + 0.5 * gravity * seconds * seconds
 
